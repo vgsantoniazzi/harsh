@@ -5,10 +5,8 @@
 char *yytext = "";
 int yyleng = 0;
 int yylineno = 0;
-
-main(){
-  printf("return of gets %d", lex());
-}
+int look_ahead = -1;
+int token;
 
 lex() {
   static char input_buffer[128];
@@ -32,7 +30,7 @@ lex() {
       }
     }
     for ( ; *current ; current++) {
-      yytext = *current;
+      yytext = current;
       yyleng = 1;
 
       switch( *current ){
@@ -60,4 +58,15 @@ lex() {
       }
     }
   }
+}
+
+int match_with( token ) {
+  if( look_ahead == -1 )
+    look_ahead = lex();
+
+  return token == look_ahead;
+}
+
+void advance() {
+  look_ahead = lex();
 }

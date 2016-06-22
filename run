@@ -1,0 +1,2 @@
+#!/bin/sh
+clang lex.c plain.c main.c -o harsh && ./harsh
