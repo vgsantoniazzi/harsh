@@ -1,6 +1,3 @@
 #include "lex.h";
 
-main(){
-  statements();
-}
-
+main() { statements(); }

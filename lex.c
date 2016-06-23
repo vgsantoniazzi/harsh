@@ -1,6 +1,6 @@
 #include "lex.h"
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
 
 char *yytext = "";
 int yyleng = 0;
@@ -14,41 +14,48 @@ lex() {
 
   current = yytext + yyleng;
 
-  while( 1 ) {
-    while( !*current ){
+  while (1) {
+    while (!*current) {
       current = input_buffer;
 
-      if( !gets ( input_buffer ) ) {
+      if (!gets(input_buffer)) {
         *current = '\0';
         return EOI;
       }
 
       yylineno++;
 
-      while( isspace( *current ) ){
+      while (isspace(*current)) {
         *current++;
       }
     }
-    for ( ; *current ; current++) {
+    for (; *current; current++) {
       yytext = current;
       yyleng = 1;
 
-      switch( *current ){
-      case EOF: return EOI;
-      case ';': return SEMI;
-      case '+': return PLUS;
-      case '*': return TIMES;
-      case '(': return LP;
-      case ')': return RP;
+      switch (*current) {
+      case EOF:
+        return EOI;
+      case ';':
+        return SEMI;
+      case '+':
+        return PLUS;
+      case '*':
+        return TIMES;
+      case '(':
+        return LP;
+      case ')':
+        return RP;
       case '\n':
       case '\t':
-      case ' ': break;
+      case ' ':
+        break;
 
       default:
-        if ( !isalnum( *current ) ){
+        if (!isalnum(*current)) {
           fprintf(stderr, "Ingnoring illegal input <%c> \n", *current);
         } else {
-          while( isalnum( *current ) ){
+          while (isalnum(*current)) {
             current++;
           }
           yyleng = current - yytext;
@@ -60,13 +67,11 @@ lex() {
   }
 }
 
-int match_with( token ) {
-  if( look_ahead == -1 )
+int match_with(token) {
+  if (look_ahead == -1)
     look_ahead = lex();
 
   return token == look_ahead;
 }
 
-void advance() {
-  look_ahead = lex();
-}
+void advance() { look_ahead = lex(); }

@@ -1,0 +1,8 @@
+#!/bin/sh
+CURRENT_PATH=$PWD
+FILE_PATH=$(dirname $0)
+clang lex.c plain.c main.c -o harsh && ./harsh
+./harsh
+rm harsh
+cd $CURRENT_PATH
+
