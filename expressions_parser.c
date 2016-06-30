@@ -1,14 +1,22 @@
-#include "lex.h"
 #include <stdio.h>
+#include <stdarg.h>
+#include "lex.h"
 
-void factor(void);
-void term(void);
-void expression(void);
+void factor(char *tempvar);
+void term(char *tempvar);
+void expression(char *tempvar);
+
+extern char *newname(void);
+extern char freename(char *name);
 
 statements() {
-  while (!match_with(EOI)) {
-    expression();
+  char *tempvar;
 
+  while (!match_with(EOI)) {
+    expression(tempvar = newname());
+    freename(tempvar);
+
+    exit(0);
     if (match_with(SEMI)) {
       advance();
     } else {
@@ -17,40 +25,39 @@ statements() {
   }
 }
 
-void expression() {
-  if (!legal_lookahead(NUM_OR_ID, LP, 0)) {
-    return;
-  }
+void expression(char *tempvar) {
+  char *tempvar2;
 
-  term();
+  term(tempvar);
 
   while (match_with(PLUS)) {
     advance();
-    term();
+    term(tempvar2 = newname());
+    printf("    %s += %s \n", tempvar, tempvar2);
+    freename(tempvar2);
   }
 }
 
-void term() {
-  if (!legal_lookahead(NUM_OR_ID, LP, 0))
-    return;
+void term(char *tempvar) {
+  char *tempvar2;
 
-  factor();
+  factor(tempvar);
 
   while (match_with(TIMES)) {
     advance();
-    term();
+    factor(tempvar2 = newname());
+    printf("    %s *= %s \n", tempvar, tempvar2);
+    freename(tempvar2);
   }
 }
 
-void factor() {
-  if (!legal_lookahead(NUM_OR_ID, LP, 0))
-    return;
-
+void factor(char *tempvar) {
   if (match_with(NUM_OR_ID)) {
+    printf("    %s = %0.*s\n", tempvar, yyleng, yytext);
     advance();
   } else if (match_with(LP)) {
     advance();
-    expression();
+    expression(tempvar);
 
     if (match_with(RP)) {
       advance();
@@ -60,50 +67,4 @@ void factor() {
   } else {
     fprintf(stderr, "%d: Number or identifier expected");
   }
-}
-
-#include <stdarg.h>
-
-#define MAXFIRST 16
-
-int first_arg;
-
-legal_lookahead(first_arg) {
-  va_list args;
-  int tok;
-  int lookaheads[MAXFIRST], *p = lookaheads, *current;
-  int error_printed = 0;
-  int rval = 0;
-
-  va_start(args, first_arg);
-
-  if(!first_arg){
-    if(match_with(EOI)){
-      rval = 1;
-    }
-  } else {
-    *p++ = first_arg;
-
-    while(tok = va_arg(args, int) && p < &lookaheads[MAXFIRST]) {
-      *++p = tok;
-    }
-
-    while(!match_with(SEMI)) {
-      for(current = lookaheads; current < p; ++current) {
-        if(match_with(*current)){
-          rval = 1;
-          goto exit;
-        }
-      }
-      if(!error_printed) {
-        fprintf(stderr, "Line syntax error\n", yylineno);
-        error_printed = 1;
-      }
-
-      advance();
-    }
-  }
-  exit:
-    va_end(args);
-    return rval;
 }

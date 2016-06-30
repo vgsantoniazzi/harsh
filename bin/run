@@ -1,7 +1,7 @@
 #!/bin/sh
 CURRENT_PATH=$PWD
 FILE_PATH=$(dirname $0)
-clang lex.c expressions_parser.c main.c -o harsh && ./harsh
+clang variables.c lex.c expressions_parser.c main.c -o harsh
 ./harsh
 rm harsh
 cd $CURRENT_PATH
