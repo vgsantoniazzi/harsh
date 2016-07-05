@@ -1,6 +1,6 @@
 ## Welcome to Harsh
 
-Harsh is a C compiler written in C.
+Harsh is a C precompiler written in C.
 
 ## Getting Started
 
@@ -8,14 +8,30 @@ From source code:
 
 ```
 git clone git@github.com:vgsantoniazzi/harsh.git
-cd harsh
-clang lex.c -o lex
 ```
 
-## Usage (REPL)
+#### Compile
 
 ```
-./lex
+make
+```
+
+#### Usage (REPL)
+
+```
+make run
+```
+
+#### Clean object files
+
+```
+make clean
+```
+
+#### Install
+
+```
+make install
 ```
 
 ## Contributing
