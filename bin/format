@@ -1,6 +1,6 @@
 ﻿#!/bin/bash
 
-for DIRECTORY in .
+for DIRECTORY in src
 do
     echo "Formatting code under $DIRECTORY/"
     find "$DIRECTORY" \( -name '*.h' -or -name '*.c' \) -print0 | xargs -0 clang-format -i

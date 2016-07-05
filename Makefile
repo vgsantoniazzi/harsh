@@ -19,6 +19,9 @@ run:
 install:
 	cp $(EXECUTABLE) $(SYSTEM_PATH)
 
+format:
+	bin/format
+
 clean:
 	rm $(OBJECTS)
 	rm $(EXECUTABLE)

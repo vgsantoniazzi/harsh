@@ -34,6 +34,12 @@ make clean
 make install
 ```
 
+#### Format source code
+
+```
+make format
+```
+
 ## Contributing
 
 I :heart: Open source!
