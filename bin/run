@@ -1,6 +1,0 @@
-#!/bin/sh
-CURRENT_PATH=$PWD
-FILE_PATH=$(dirname $0)
-clang src/variables.c src/lex.c src/expressions_parser.c src/main.c -o harsh
-./harsh
-
