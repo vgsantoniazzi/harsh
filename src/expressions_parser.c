@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include "lex.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 void factor(char *tempvar);
 void term(char *tempvar);
