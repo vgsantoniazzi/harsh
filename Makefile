@@ -15,7 +15,7 @@ $(EXECUTABLE): $(OBJECTS)
 $(OBJECTS):
 	$(CC) $(CFLAGS) $(subst $(BUILD_PATH),$(SOURCE_PATH),$(subst .o,.c,$@)) -o $@
 
-run:
+run: clean all
 	$(EXECUTABLE)
 
 install:
