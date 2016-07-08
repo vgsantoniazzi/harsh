@@ -1,7 +1,7 @@
 #include "lex.h"
 #include <stdio.h>
 
-char *names[] = {"t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7"};
+char *names[] = {"_temporary_0", "_temporary_1", "_temporary_2", "_temporary_3", "_temporary_4", "_temporary_5", "_temporary_6", "_temporary_7"};
 char **namep = names;
 
 char *newname() {
